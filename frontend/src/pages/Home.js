@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from "react";
 
 // components
@@ -29,6 +30,50 @@ const Home = () => {
           ))}
       </div>
       <WorkoutForm />
+    </div>
+  );
+};
+
+export default Home;
+*/
+
+import { useEffect, useState } from "react";
+
+// components
+import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/WorkoutForm";
+
+const Home = () => {
+  const [workouts, setWorkouts] = useState(null);
+
+  useEffect(() => {
+    const fetchWorkouts = async () => {
+      const response = await fetch("/api/workouts");
+      const json = await response.json();
+
+      if (response.ok) {
+        setWorkouts(json);
+      }
+    };
+
+    fetchWorkouts();
+  }, []);
+
+  // Add the newly created workout to the list
+  const handleWorkoutAdded = (newWorkout) => {
+    setWorkouts((currentWorkouts) => [newWorkout, ...currentWorkouts]);
+  };
+
+  return (
+    <div className="home">
+      <div className="workouts">
+        {workouts &&
+          workouts.map((workout) => (
+            <WorkoutDetails workout={workout} key={workout._id} />
+          ))}
+      </div>
+
+      <WorkoutForm onWorkoutAdded={handleWorkoutAdded} />
     </div>
   );
 };
