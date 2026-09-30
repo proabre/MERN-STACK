@@ -59,9 +59,16 @@ const Home = () => {
     fetchWorkouts();
   }, []);
 
-  // Add the newly created workout to the list
+  // Add new workout to the list
   const handleWorkoutAdded = (newWorkout) => {
     setWorkouts((currentWorkouts) => [newWorkout, ...currentWorkouts]);
+  };
+
+  // Remove deleted workout from the list
+  const handleWorkoutDeleted = (deletedWorkout) => {
+    setWorkouts((currentWorkouts) =>
+      currentWorkouts.filter((workout) => workout._id !== deletedWorkout._id),
+    );
   };
 
   return (
@@ -69,7 +76,11 @@ const Home = () => {
       <div className="workouts">
         {workouts &&
           workouts.map((workout) => (
-            <WorkoutDetails workout={workout} key={workout._id} />
+            <WorkoutDetails
+              workout={workout}
+              onWorkoutDeleted={handleWorkoutDeleted}
+              key={workout._id}
+            />
           ))}
       </div>
 
