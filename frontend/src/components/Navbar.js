@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
-
-const Navbar = () => {
+const Navbar = ({ darkMode, toggleTheme }) => {
   return (
     <header>
       <div className="container">
-        <Link to="/">
-          <h1>Workout Buddy</h1>
-        </Link>
+        <h1>
+          <a href="/">Workout Tracker</a>
+        </h1>
+
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {darkMode ? "☀ Light" : "☾ Dark"}
+        </button>
       </div>
     </header>
   );
